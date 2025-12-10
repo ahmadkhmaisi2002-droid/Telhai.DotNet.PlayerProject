@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8 d17.14
+VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telhai.DotNet.PlayerProject", "Telhai.DotNet.PlayerProject\Telhai.DotNet.PlayerProject.csproj", "{87808D1E-7BE0-422D-87CE-6E8412267C66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telhai.Cs.CsharpCourse.DesignedPatterns", "Telhai.Cs.CsharpCourse.DesignedPatterns\Telhai.Cs.CsharpCourse.DesignedPatterns.csproj", "{A2BBCD6D-B09C-4A46-8C17-F983424AAE8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{87808D1E-7BE0-422D-87CE-6E8412267C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87808D1E-7BE0-422D-87CE-6E8412267C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87808D1E-7BE0-422D-87CE-6E8412267C66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2BBCD6D-B09C-4A46-8C17-F983424AAE8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2BBCD6D-B09C-4A46-8C17-F983424AAE8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2BBCD6D-B09C-4A46-8C17-F983424AAE8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2BBCD6D-B09C-4A46-8C17-F983424AAE8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
