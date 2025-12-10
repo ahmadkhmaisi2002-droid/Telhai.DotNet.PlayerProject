@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36623.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telhai.DotNet.PlayerProject", "Telhai.DotNet.PlayerProject\Telhai.DotNet.PlayerProject.csproj", "{87808D1E-7BE0-422D-87CE-6E8412267C66}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87808D1E-7BE0-422D-87CE-6E8412267C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87808D1E-7BE0-422D-87CE-6E8412267C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87808D1E-7BE0-422D-87CE-6E8412267C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87808D1E-7BE0-422D-87CE-6E8412267C66}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {066893A0-53A3-41BB-B4AB-CB4BA99C2F52}
+	EndGlobalSection
+EndGlobal
