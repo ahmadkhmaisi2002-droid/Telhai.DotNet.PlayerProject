@@ -320,6 +320,22 @@ namespace Telhai.DotNet.PlayerProject
             }
         }
 
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstLibrary.SelectedItem is MusicTrack track)
+            {
+                
+                var obs = new System.Collections.ObjectModel.ObservableCollection<MusicTrack>(library);
+                var win = new SongEditorWindow(obs, track, SaveLibrary);
+                win.ShowDialog();
+
+                
+                library = obs.ToList();
+                UpdateLibraryUI();
+            }
+        }
+
+
     }
 }
 
