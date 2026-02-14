@@ -22,6 +22,8 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 using Telhai.DotNet.PlayerProject.Services;
+using System.Windows.Media.Imaging;
+
 
 
 
@@ -214,25 +216,40 @@ namespace Telhai.DotNet.PlayerProject
                 txtAlbumName.Text = "";
                 imgAlbum.Source = null;
 
-                if (_metaCache.TryGetValue(key, out var cached))
+                
+
+                if (!string.IsNullOrWhiteSpace(track.ApiSongName) ||
+                    !string.IsNullOrWhiteSpace(track.ApiArtistName) ||
+                    !string.IsNullOrWhiteSpace(track.ApiAlbumName) ||
+                    !string.IsNullOrWhiteSpace(track.ApiArtworkUrl))
                 {
-                    ApplyMetadataToUI(track, cached);
-                    txtStatus.Text = "Ready";
+                    ApplySavedMetadataToUI(track);
+                    txtStatus.Text = "Ready (from JSON)";
                     return;
                 }
 
-                
+
                 string cleanTitle = track.Title.Replace("_", " ").Replace("-", " ");
                 string query = Uri.EscapeDataString(cleanTitle);
 
                 var resp = await _itunes.SearchSongAsync(query, token);
-                MessageBox.Show(resp?.ResultCount.ToString() ?? "NULL");
+                
 
                 ItunesSong? song = null;
                 if (resp != null && resp.ResultCount > 0 && resp.Results.Length > 0)
                     song = resp.Results[0];
 
-                _metaCache[key] = song;
+                if (song != null)
+                {
+                    track.ApiSongName = song.TrackName;
+                    track.ApiArtistName = song.ArtistName;
+                    track.ApiAlbumName = song.CollectionName;
+                    track.ApiArtworkUrl = song.ArtworkUrl100;
+
+                    SaveLibrary(); 
+                }
+
+
 
                 ApplyMetadataToUI(track, song);
                 txtStatus.Text = "Ready";
@@ -275,6 +292,33 @@ namespace Telhai.DotNet.PlayerProject
             else imgAlbum.Source = null;
         }
 
+        private void ApplySavedMetadataToUI(MusicTrack track)
+        {
+            txtSongName.Text = track.ApiSongName ?? track.Title;
+            txtArtistName.Text = track.ApiArtistName ?? "Unknown";
+            txtAlbumName.Text = track.ApiAlbumName ?? "Unknown";
+
+            if (!string.IsNullOrWhiteSpace(track.ApiArtworkUrl))
+            {
+                try
+                {
+                    var bmp = new System.Windows.Media.Imaging.BitmapImage();
+                    bmp.BeginInit();
+                    bmp.UriSource = new Uri(track.ApiArtworkUrl);
+                    bmp.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+                    bmp.EndInit();
+                    imgAlbum.Source = bmp;
+                }
+                catch
+                {
+                    imgAlbum.Source = null;
+                }
+            }
+            else
+            {
+                imgAlbum.Source = null;
+            }
+        }
 
     }
 }

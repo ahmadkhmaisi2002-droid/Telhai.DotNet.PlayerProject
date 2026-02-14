@@ -33,23 +33,19 @@
             </StackPanel>
         </StackPanel>
 
-        <Grid Grid.Column="1" Margin="10,0,0,0">
+        <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="36.559"/>
+                <RowDefinition Height="223.441"/>
+
                 <RowDefinition Height="*"/>
+
                 <RowDefinition Height="Auto"/>
+
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Library" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
 
-            <ListBox x:Name="lstLibrary" Grid.Row="1" Background="#333" Foreground="White" MouseDoubleClick="LstLibrary_MouseDoubleClick"/>
-
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
-                <Button Content="Add MP3" Click="BtnAdd_Click" Width="100" Margin="5"/>
-                <Button Content="Remove" Click="BtnRemove_Click" Width="100" Margin="5"/>
-            </StackPanel>
-
-            <GroupBox Header="Song Info" Margin="10">
+            <GroupBox Header="SongInfo" Grid.Row="0" Margin="0,0,0,10" Grid.RowSpan="2">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120"/>
@@ -68,19 +64,28 @@
                     </Border>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Song:" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtSongName"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtSongName" TextWrapping="Wrap"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Artist:" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtArtistName"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtArtistName" TextWrapping="Wrap"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Album:" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtAlbumName"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtAlbumName" TextWrapping="Wrap"/>
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Path:" FontWeight="Bold"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtFilePath" TextWrapping="Wrap"/>
                 </Grid>
             </GroupBox>
 
+
+            <ListBox x:Name="lstLibrary" Grid.Row="2" MouseDoubleClick="LstLibrary_MouseDoubleClick"/>
+
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Button Content="Add MP3" Width="120" Margin="5" Click="BtnAdd_Click"/>
+                <Button Content="Remove" Width="120" Margin="5" Click="BtnRemove_Click"/>
+            </StackPanel>
         </Grid>
+
     </Grid>
 </Window>
