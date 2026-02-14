@@ -18,6 +18,12 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using System.Threading;
+using System.Collections.Generic;
+using System.Windows.Media.Imaging;
+using Telhai.DotNet.PlayerProject.Services;
+
+
 
 namespace Telhai.DotNet.PlayerProject
 {
@@ -32,6 +38,10 @@ namespace Telhai.DotNet.PlayerProject
         private List<MusicTrack> library = new List<MusicTrack>();
         private bool isDragging = false;
         private const string FILE_NAME = "library.json";
+        private readonly ItunesService _itunes = new ItunesService();
+        private CancellationTokenSource? _cts;
+        private readonly Dictionary<string, ItunesSong?> _metaCache = new Dictionary<string, ItunesSong?>();
+
 
 
         public MusicPlayer()
@@ -180,8 +190,91 @@ namespace Telhai.DotNet.PlayerProject
                 timer.Start();
                 txtCurrentSong.Text = track.Title;
                 txtStatus.Text = "Playing";
+
+                _ = LoadMetadataAsync(track);
             }
         }
+
+
+        private async Task LoadMetadataAsync(MusicTrack track)
+        {
+            txtFilePath.Text = track.FilePath;
+
+            _cts?.Cancel();
+            _cts = new CancellationTokenSource();
+            var token = _cts.Token;
+
+            string key = track.FilePath;
+
+            try
+            {
+                txtStatus.Text = "Fetching metadata...";
+                txtSongName.Text = "";
+                txtArtistName.Text = "";
+                txtAlbumName.Text = "";
+                imgAlbum.Source = null;
+
+                if (_metaCache.TryGetValue(key, out var cached))
+                {
+                    ApplyMetadataToUI(track, cached);
+                    txtStatus.Text = "Ready";
+                    return;
+                }
+
+                
+                string cleanTitle = track.Title.Replace("_", " ").Replace("-", " ");
+                string query = Uri.EscapeDataString(cleanTitle);
+
+                var resp = await _itunes.SearchSongAsync(query, token);
+                MessageBox.Show(resp?.ResultCount.ToString() ?? "NULL");
+
+                ItunesSong? song = null;
+                if (resp != null && resp.ResultCount > 0 && resp.Results.Length > 0)
+                    song = resp.Results[0];
+
+                _metaCache[key] = song;
+
+                ApplyMetadataToUI(track, song);
+                txtStatus.Text = "Ready";
+            }
+            catch (OperationCanceledException) { }
+            catch
+            {
+                txtStatus.Text = "Metadata error";
+            }
+        }
+
+        private void ApplyMetadataToUI(MusicTrack track, ItunesSong? song)
+        {
+            if (song == null)
+            {
+                txtSongName.Text = track.Title;
+                txtArtistName.Text = "Unknown";
+                txtAlbumName.Text = "Unknown";
+                imgAlbum.Source = null;
+                return;
+            }
+
+            txtSongName.Text = song.TrackName ?? track.Title;
+            txtArtistName.Text = song.ArtistName ?? "Unknown";
+            txtAlbumName.Text = song.CollectionName ?? "Unknown";
+
+            if (!string.IsNullOrWhiteSpace(song.ArtworkUrl100))
+            {
+                try
+                {
+                    var bmp = new BitmapImage();
+                    bmp.BeginInit();
+                    bmp.UriSource = new Uri(song.ArtworkUrl100);
+                    bmp.CacheOption = BitmapCacheOption.OnLoad;
+                    bmp.EndInit();
+                    imgAlbum.Source = bmp;
+                }
+                catch { imgAlbum.Source = null; }
+            }
+            else imgAlbum.Source = null;
+        }
+
 
     }
 }

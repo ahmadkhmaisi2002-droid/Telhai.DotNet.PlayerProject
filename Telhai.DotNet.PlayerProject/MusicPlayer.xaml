@@ -48,6 +48,39 @@
                 <Button Content="Add MP3" Click="BtnAdd_Click" Width="100" Margin="5"/>
                 <Button Content="Remove" Click="BtnRemove_Click" Width="100" Margin="5"/>
             </StackPanel>
+
+            <GroupBox Header="Song Info" Margin="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10">
+                        <Image x:Name="imgAlbum" Stretch="UniformToFill"/>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Song:" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtSongName"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Artist:" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtArtistName"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Album:" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtAlbumName"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Path:" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtFilePath" TextWrapping="Wrap"/>
+                </Grid>
+            </GroupBox>
+
         </Grid>
     </Grid>
 </Window>
